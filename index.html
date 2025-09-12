@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeoKey Button UI</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Neo Button Styles */
+      .btn-3d {
+        font-size: 1.5rem;
+        width: 56px;
+        height: 56px;
+        border-radius: 7px;
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        transform-style: preserve-3d;
+        position: relative;
+        z-index: 2;
+        transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
+          background-color 150ms cubic-bezier(0, 0, 0.58, 1);
+      }
+
+      .btn-3d::before {
+        position: absolute;
+        content: "";
+        inset: 0;
+        background-color: var(--bs-secondary-bg);
+        border-radius: 6px;
+        box-shadow: 0 0 0 1px var(--bs-border-color),
+          0 8px 6px 1px rgba(0, 0, 0, 0.15);
+        transform: translate3d(0, 10px, -12px);
+        transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
+          box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+      }
+
+      .btn-3d:hover {
+        background-color: var(--bs-tertiary-bg);
+        border-color: var(--bs-border-color);
+        transform: translate(0, 4px);
+      }
+
+      .btn-3d:hover::before {
+        box-shadow: 0 0 0 1px var(--bs-border-color),
+          0 6px 4px 1px rgba(0, 0, 0, 0.15);
+        transform: translate3d(0, 6px, -12px);
+      }
+
+      .btn-3d:active {
+        background-color: var(--bs-secondary-bg);
+        border-color: var(--bs-border-color) !important;
+        transform: translate(0, 10px);
+      }
+
+      .btn-3d:active::before {
+        box-shadow: none;
+        transform: translate3d(0, 0px, -12px);
+      }
+
+      /* Icon Animation */
+      .btn-icon {
+        transition: color 0.3s ease, transform 0.2s ease;
+      }
+
+      .btn-icon.active {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body class="p-5 bg-light">
+    <div
+      class="d-flex flex-row align-items-center justify-content-center gap-4 py-5 mx-auto"
+    >
+      <!-- NeoKey Button -->
+      <div style="transform: translateY(-10px)">
+        <button
+          type="button"
+          class="btn btn-3d d-flex justify-content-center align-items-center text-body"
+          id="likeBtn"
+          data-bs-toggle="tooltip"
+          title="Like"
+        >
+          <i class="bi bi-heart btn-icon" id="likeIcon"></i>
+          <span class="visually-hidden">Like</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Initialize tooltips
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
+
+      // Like button functionality
+      const likeBtn = document.getElementById("likeBtn");
+      const likeIcon = document.getElementById("likeIcon");
+      let isLiked = false;
+
+      likeBtn.addEventListener("click", () => {
+        isLiked = !isLiked;
+
+        if (isLiked) {
+          likeBtn.classList.remove("text-body");
+          likeBtn.classList.add("text-danger");
+          likeIcon.classList.remove("bi-heart");
+          likeIcon.classList.add("bi-heart-fill", "active");
+        } else {
+          likeBtn.classList.remove("text-danger");
+          likeBtn.classList.add("text-body");
+          likeIcon.classList.remove("bi-heart-fill", "active");
+          likeIcon.classList.add("bi-heart");
+        }
+      });
+    </script>
+  </body>
+</html>
